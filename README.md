@@ -10,6 +10,8 @@ This repository contains a fully automated CI/CD pipeline for the **vProfile App
 GitHub → Fetch Code → Build (Maven) → Unit Tests → Checkstyle →
 SonarQube Analysis → Quality Gate → Upload to Nexus → Slack Notification
 
+![CI/CD Pipeline Diagram](diagram.png)
+
 
 ---
 
