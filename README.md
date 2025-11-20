@@ -1,264 +1,177 @@
-# Jenkins-Maven-Sonar-Nexus-Pipeline-Vprofile-Project
-Jenkins-Maven-Sonar-Nexus-Pipeline – vProfile Project
+# Jenkins–Maven–SonarQube–Nexus CI/CD Pipeline  
+## vProfile Project – Complete DevOps Implementation
 
-This repository contains a complete CI/CD pipeline implementation for the vProfile Application using Jenkins, Maven, SonarQube, Checkstyle, Nexus Repository Manager, and Slack Notifications.
+This repository contains a fully automated CI/CD pipeline for the **vProfile Application** using Jenkins, Maven, SonarQube, Checkstyle, Nexus Repository Manager, and Slack notifications.
 
-✅ SVG CI/CD Pipeline Diagram
-<svg width="900" height="600" xmlns="http://www.w3.org/2000/svg">
+---
 
-  <!-- Title -->
-  <text x="300" y="40" font-size="26" font-weight="bold" fill="#333">
-    CI/CD Pipeline – vProfile Project
-  </text>
+## 📌 CI/CD Pipeline Diagram (Text Format)
 
-  <!-- Box Style -->
-  <style>
-    .box {
-      fill: #f5f5f5;
-      stroke: #333;
-      stroke-width: 2;
-      rx: 12;
-      ry: 12;
-    }
-    .label {
-      font-size: 18px;
-      font-family: Arial, sans-serif;
-      fill: #333;
-      font-weight: bold;
-    }
-  </style>
+GitHub → Fetch Code → Build (Maven) → Unit Tests → Checkstyle →
+SonarQube Analysis → Quality Gate → Upload to Nexus → Slack Notification
 
-  <!-- Step 1: GitHub -->
-  <rect x="330" y="80" width="240" height="60" class="box"/>
-  <text x="360" y="120" class="label">Fetch Code (GitHub)</text>
 
-  <!-- Arrow -->
-  <line x1="450" y1="140" x2="450" y2="170" stroke="#333" stroke-width="2"/>
-  <polygon points="450,170 445,160 455,160" fill="#333"/>
+---
 
-  <!-- Step 2: Build -->
-  <rect x="330" y="170" width="240" height="60" class="box"/>
-  <text x="390" y="210" class="label">Build (Maven)</text>
+## 🚀 Overview
 
-  <!-- Arrow -->
-  <line x1="450" y1="230" x2="450" y2="260" stroke="#333" stroke-width="2"/>
-  <polygon points="450,260 445,250 455,250" fill="#333"/>
+This project demonstrates industry-standard DevOps practices:
 
-  <!-- Step 3: Unit Test -->
-  <rect x="330" y="260" width="240" height="60" class="box"/>
-  <text x="390" y="300" class="label">Unit Tests</text>
+- Automated Code Fetch  
+- Maven Build & Packaging  
+- Unit Testing  
+- Static Code Analysis (Checkstyle)  
+- SonarQube Scanning + Quality Gates  
+- Artifact Upload to Nexus  
+- Slack Notifications  
+- Fully automated **Jenkins Declarative Pipeline**
 
-  <!-- Arrow -->
-  <line x1="450" y1="320" x2="450" y2="350" stroke="#333" stroke-width="2"/>
-  <polygon points="450,350 445,340 455,340" fill="#333"/>
+---
 
-  <!-- Step 4: Checkstyle -->
-  <rect x="330" y="350" width="240" height="60" class="box"/>
-  <text x="375" y="390" class="label">Checkstyle Analysis</text>
+## 🔄 Pipeline Workflow
 
-  <!-- Arrow -->
-  <line x1="450" y1="410" x2="450" y2="440" stroke="#333" stroke-width="2"/>
-  <polygon points="450,440 445,430 455,430" fill="#333"/>
+### **1. Fetch Code**
+Clones the repository (main branch) from GitHub.
 
-  <!-- Step 5: SonarQube -->
-  <rect x="330" y="440" width="240" height="60" class="box"/>
-  <text x="365" y="480" class="label">SonarQube Analysis</text>
+### **2. Build**
 
-  <!-- Arrow -->
-  <line x1="450" y1="500" x2="450" y2="530" stroke="#333" stroke-width="2"/>
-  <polygon points="450,530 445,520 455,520" fill="#333"/>
+mvn install -DskipTests
 
-  <!-- Step 6: Quality Gate -->
-  <rect x="330" y="530" width="240" height="60" class="box"/>
-  <text x="380" y="570" class="label">Quality Gate</text>
+- Generates the `.war` file  
+- Archives artifacts inside Jenkins
 
+### **3. Unit Testing**
 
-  <!-- Right Path: Nexus Upload -->
-  <line x1="570" y1="560" x2="650" y2="560" stroke="#333" stroke-width="2"/>
-  <polygon points="650,560 640,555 640,565" fill="#333"/>
+mvn test
 
-  <rect x="650" y="520" width="230" height="80" class="box"/>
-  <text x="700" y="565" class="label">Upload to Nexus</text>
+Executes JUnit test cases.
 
-  <!-- Left Path: Slack -->
-  <line x1="330" y1="560" x2="250" y2="560" stroke="#333" stroke-width="2"/>
-  <polygon points="250,560 260,555 260,565" fill="#333"/>
+### **4. Checkstyle Analysis**
+Runs the Maven Checkstyle plugin and produces:
 
-  <rect x="20" y="520" width="230" height="80" class="box"/>
-  <text x="70" y="565" class="label">Slack Notification</text>
+checkstyle-result.xml
 
-</svg>
 
+### **5. SonarQube Scan**
+The pipeline sends:
+- Java source code  
+- Compiled binaries  
+- JUnit Reports  
+- JaCoCo Coverage  
+- Checkstyle Violations  
 
-The project demonstrates industry-standard DevOps practices, including:
+### **6. Quality Gate Check**
+- Jenkins waits for SonarQube results  
+- Build **fails** if Quality Gate fails  
 
-Automated Code Fetch
-
-Compilation & Packaging
-
-Unit Testing
-
-Static Code Analysis (Checkstyle)
-
-SonarQube Scan + Quality Gate
-
-Artifact Upload to Nexus
-
-Slack Notifications
-
-This pipeline is fully automated using a Jenkins Declarative Pipeline.
-
-🚀 Pipeline Workflow
-
-The Jenkins pipeline executes the following sequence:
-
-Fetch Code
-
-Clones the repository from GitHub (main branch).
-
-Build Stage
-
-Executes mvn install -DskipTests
-
-Generates .war package
-
-Archives artifacts inside Jenkins
-
-Unit Testing
-
-Executes mvn test
-
-Ensures code functionality & JUnit validation
-
-Checkstyle Analysis
-
-Runs Maven Checkstyle plugin
-
-Ensures code formatting & quality standards
-
-Generates checkstyle-result.xml
-
-SonarQube Code Analysis
-
-Uses sonar-scanner
-
-Sends following data to SonarQube:
-
-Source code
-
-Java binaries
-
-JUnit reports
-
-JaCoCo coverage
-
-Checkstyle violations
-
-Quality Gate Validation
-
-Pipeline pauses until SonarQube completes analysis
-
-Fails the pipeline if the Quality Gate is not met
-
-Upload Artifact to Nexus
-
-WAR file uploaded to hosted repository vprofile-repo
-
-Uses Nexus3 Artifact Uploader plugin
-
-Slack Notifications
-
-Sends success/failure message to Slack channel
-
-Includes build number, job name, build URL
-
-📂 Jenkinsfile Summary
-
-pipeline {
-  Fetch Code → Build → Unit Test → Checkstyle → Sonar Analysis → Quality Gate → Upload Artifact → Slack Alerts
-}
-
-🔧 Technologies Used
-Tool / Technology	Purpose
-Jenkins	CI/CD Orchestration
-Maven 3.9	Build & Dependency Management
-JDK 17	Java Compilation
-Checkstyle	Static Code Formatting Checks
-SonarQube	Code Quality, Bugs, Vulnerabilities
-Nexus 3	Artifact Repository (.war uploads)
-Slack	Build Notifications
-GitHub	Version Control
-🛠️ Pre-Requisites
-
-Before running this pipeline, ensure:
-
-In Jenkins
-
-Maven tool configured as: Maven3.9
-
-JDK configured as: JDK17
-
-Sonar Scanner installed as: sonar6.2
-
-SonarQube server configured with name: sonarserver
-
-Credentials created:
-
-nexuslogin → Username/Password for Nexus
-
-Slack token (in Slack plugin config)
-
-In Nexus
-
-Hosted Maven repository created:
-
-Name: vprofile-repo
-
-In SonarQube
-
-Project created with key: vprofile
-
-Quality Gate configured
-
-JaCoCo, JUnit, Checkstyle rules enforced
-
-📦 Generated Artifact
-
-The Jenkins pipeline uploads the following file to Nexus:
+### **7. Nexus Upload**
+Artifact uploaded:
 
 target/vprofile-v2.war
 
-Versioning format:
+Uploaded to repository:
+
+
+vprofile-repo
+
+
+### **8. Slack Notification**
+Final status sent to Slack with:
+- Build number  
+- Job name  
+- Build URL  
+
+---
+
+## 📂 Jenkinsfile Stage Summary
+
+
+Fetch Code
+→ Build
+→ Unit Test
+→ Checkstyle
+→ Sonar Analysis
+→ Quality Gate
+→ Upload Artifact
+→ Slack Alerts
+
+
+---
+
+## 🔧 Technologies Used
+
+| Tool / Technology | Purpose |
+|-------------------|---------|
+| Jenkins | CI/CD Orchestration |
+| Maven 3.9 | Build & Dependency Management |
+| JDK 17 | Java Compilation |
+| Checkstyle | Code Formatting |
+| SonarQube | Code Quality |
+| Nexus 3 | Artifact Repository |
+| Slack | Notifications |
+| GitHub | Version Control |
+
+---
+
+## 🛠️ Pre-Requisites
+
+### **Jenkins Setup**
+- Maven → `Maven3.9`  
+- JDK → `JDK17`  
+- Sonar Scanner → `sonar6.2`  
+- Sonar Server → `sonarserver`  
+- Credentials:
+  - `nexuslogin`  
+  - Slack Token  
+
+### **Nexus**
+Create a hosted repository:
+
+vprofile-repo
+
+
+### **SonarQube**
+- Project Key: `vprofile`  
+- Quality Gate configured  
+- JaCoCo, JUnit, Checkstyle enabled  
+
+---
+
+## 📦 Generated Artifact
+
+target/vprofile-v2.war
+
+
+Version format:
+
+
 <BUILD_ID>-<BUILD_TIMESTAMP>
+e.g., 23-20241115_112030
 
-Example:
-23-20241115_112030
 
-📸 Pipeline Diagram
-GitHub → Fetch Code → Build → Unit Test → Checkstyle → Sonar Scan → Quality Gate → Upload to Nexus → Slack Notification
+---
 
-🧪 Running the Pipeline
+## 🧪 Running the Pipeline
 
-Create a Jenkins Pipeline job
+1. Create a Jenkins Pipeline job  
+2. Select **Pipeline script from SCM**  
+3. Provide repository URL  
+4. Build  
+5. Jenkins executes all stages automatically  
 
-Point it to this repository URL
+---
 
-Select "Pipeline script from SCM"
+## 🙌 Contribution
 
-Run the build
+Feel free to contribute by adding:
 
-Jenkins will automatically execute all stages end-to-end.
-
-🙌 Contribution
-
-Feel free to fork this repository and enhance the pipeline:
-
-Add Docker Build/Push
-
-Add AWS Deployment
-
-Add Kubernetes Deployment
-
-Add Terraform automation
+- Docker Build/Push  
+- AWS Deployment  
+- Kubernetes Deployment  
+- Terraform Automation  
 
 Pull Requests are welcome!
+
+---
+
+
